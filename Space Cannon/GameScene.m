@@ -57,14 +57,14 @@ static inline CGVector radiansToVector(CGFloat radians)
 {
     
     //create ball node
-    SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"ball"];
-    ball.name = @"ball";
+    SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"Ball"];
     CGVector rotationVector = radiansToVector(_cannon.zRotation);
     ball.position = CGPointMake (_cannon.position.x + (_cannon.size.width * 0.5 * rotationVector.dx),_cannon.position.y + (_cannon.size.width * rotationVector.dy));
     [_mainlayer addChild:ball];
     
     ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:6.0];
     ball.physicsBody.velocity = CGVectorMake(rotationVector.dx * SHOOT_SPEED, rotationVector.dy * SHOOT_SPEED);
+    NSLog(@"shoot called");
     
 }
     
