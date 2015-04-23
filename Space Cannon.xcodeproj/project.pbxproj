@@ -28,6 +28,9 @@
 		9D1730EF1AD081B60030251D /* Cannon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D1730E31AD081B60030251D /* Cannon@2x.png */; };
 		9D1730F01AD081B60030251D /* Halo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D1730E41AD081B60030251D /* Halo@2x.png */; };
 		9D1730F11AD081B60030251D /* Starfield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D1730E51AD081B60030251D /* Starfield@2x.png */; };
+		9D8E9ED91AE99BEB00D110E4 /* Starfield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E9ED81AE99BEB00D110E4 /* Starfield@2x.png */; };
+		9DD2AA6F1AE9AA6C00575224 /* haloExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9DD2AA6D1AE9AA6C00575224 /* haloExplosion.sks */; };
+		9DD2AA701AE9AA6C00575224 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DD2AA6E1AE9AA6C00575224 /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +72,9 @@
 		9D1730E31AD081B60030251D /* Cannon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cannon@2x.png"; sourceTree = "<group>"; };
 		9D1730E41AD081B60030251D /* Halo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Halo@2x.png"; sourceTree = "<group>"; };
 		9D1730E51AD081B60030251D /* Starfield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Starfield@2x.png"; sourceTree = "<group>"; };
+		9D8E9ED81AE99BEB00D110E4 /* Starfield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Starfield@2x.png"; sourceTree = "<group>"; };
+		9DD2AA6D1AE9AA6C00575224 /* haloExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = haloExplosion.sks; sourceTree = "<group>"; };
+		9DD2AA6E1AE9AA6C00575224 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,8 @@
 				9D1730C01AD081610030251D /* Images.xcassets */,
 				9D1730C21AD081610030251D /* LaunchScreen.xib */,
 				9D1730AE1AD081610030251D /* Supporting Files */,
+				9DD2AA6D1AE9AA6C00575224 /* haloExplosion.sks */,
+				9DD2AA6E1AE9AA6C00575224 /* spark.png */,
 			);
 			path = "Space Cannon";
 			sourceTree = "<group>";
@@ -129,6 +137,7 @@
 		9D1730AE1AD081610030251D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9D8E9ED81AE99BEB00D110E4 /* Starfield@2x.png */,
 				9D1730AF1AD081610030251D /* Info.plist */,
 				9D1730B01AD081610030251D /* main.m */,
 			);
@@ -251,14 +260,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D8E9ED91AE99BEB00D110E4 /* Starfield@2x.png in Resources */,
 				9D1730EB1AD081B60030251D /* Ammo5@2x.png in Resources */,
 				9D1730EC1AD081B60030251D /* Ball@2x.png in Resources */,
 				9D1730C41AD081610030251D /* LaunchScreen.xib in Resources */,
 				9D1730EE1AD081B60030251D /* BlueBar@2x.png in Resources */,
 				9D1730EA1AD081B60030251D /* Ammo4@2x.png in Resources */,
+				9DD2AA701AE9AA6C00575224 /* spark.png in Resources */,
 				9D1730ED1AD081B60030251D /* Block@2x.png in Resources */,
 				9D1730E61AD081B60030251D /* Ammo0@2x.png in Resources */,
 				9D1730E71AD081B60030251D /* Ammo1@2x.png in Resources */,
+				9DD2AA6F1AE9AA6C00575224 /* haloExplosion.sks in Resources */,
 				9D1730C11AD081610030251D /* Images.xcassets in Resources */,
 				9D1730B91AD081610030251D /* GameScene.sks in Resources */,
 				9D1730BF1AD081610030251D /* Main.storyboard in Resources */,
@@ -478,6 +490,7 @@
 				9D1730D51AD081610030251D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9D1730D61AD081610030251D /* Build configuration list for PBXNativeTarget "Space CannonTests" */ = {
 			isa = XCConfigurationList;
@@ -486,6 +499,7 @@
 				9D1730D81AD081610030251D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
