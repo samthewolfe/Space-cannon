@@ -12,6 +12,7 @@
 {
     SKNode *_mainlayer;
     SKSpriteNode *_cannon;
+    SKSpriteNode *_ammoDisplay;
 }
 
 static const CGFloat SHOOT_SPEED = 1000.0f;
@@ -19,9 +20,10 @@ static const CGFloat haloLowAngle = 200.0 * M_PI / 180.0;
 static const CGFloat haloHighAngle = 340.0 * M_PI / 180.0;
 static const CGFloat haloSpeed = 150.0;
 
-static const uint32_t kCCHaloCategory = 0x1 << 0;
-static const uint32_t kCCBallCategory = 0x1 << 1;
-static const uint32_t kCCEdgeCategory = 0x1 << 2;
+static const uint32_t kCCHaloCategory   = 0x1 << 0;
+static const uint32_t kCCBallCategory   = 0x1 << 1;
+static const uint32_t kCCEdgeCategory   = 0x1 << 2;
+static const uint32_t kCCShieldCategory = 0x1 << 3;
 
 static inline CGVector radiansToVector(CGFloat radians)
 {
@@ -83,12 +85,46 @@ return value * (high - low) + low;
                                                [SKAction performSelector:@selector(spawnHalo) onTarget:self]]];
     [self runAction:[SKAction repeatActionForever:spawnhalo]];
     
+    // Setup Ammo.
+    _ammoDisplay = [SKSpriteNode spriteNodeWithImageNamed:@"Ammo5"];
+    _ammoDisplay.anchorPoint = CGPointMake(0.5, 0.0);
+    _ammoDisplay.position = _cannon.position;
+    [_mainlayer addChild:_ammoDisplay];
+    self.ammo = 5;
+    
+    SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
+                                                   [SKAction runBlock:^{
+        self.ammo++;
+    }]]];
+    [self runAction:[SKAction repeatActionForever:incrementAmmo]];
+    
+}
+
+-(void)setAmmo:(int)ammo
+{
+    if (ammo >= 0 && ammo <= 5) {
+        _ammo = ammo;
+        _ammoDisplay.texture = [SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Ammo%d", ammo]];
+        
+        // Setup shields
+        for (int i = 0; i < 6; i++) {
+            SKSpriteNode *shield = [SKSpriteNode spriteNodeWithImageNamed:@"Block"];
+            shield.position = CGPointMake(307.5 + (80 *i), 90);
+            [_mainlayer addChild:shield];
+            shield.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(60, 10)];
+            shield.physicsBody.categoryBitMask = kCCShieldCategory;
+            shield.physicsBody.collisionBitMask = 0;
+        }
+        
+    }
 }
 
 
 -(void) shoot
 {
-    
+        if (self.ammo > 0) {
+        self.ammo--;
+
     //create ball node
     SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"Ball"];
     CGVector rotationVector = radiansToVector(_cannon.zRotation);
@@ -102,8 +138,9 @@ return value * (high - low) + low;
     ball.physicsBody.friction = 0.0;
     ball.physicsBody.categoryBitMask = kCCBallCategory;
     ball.physicsBody.collisionBitMask = kCCEdgeCategory;
+        }
 }
-  
+
 -(void)spawnHalo
 
     {
@@ -118,7 +155,7 @@ return value * (high - low) + low;
         halo.physicsBody.friction = 0.0;
         halo.physicsBody.categoryBitMask = kCCHaloCategory;
         halo.physicsBody.collisionBitMask = kCCEdgeCategory;
-        halo.physicsBody.contactTestBitMask = kCCBallCategory;
+        halo.physicsBody.contactTestBitMask = kCCBallCategory | kCCShieldCategory;
         [_mainlayer addChild:halo];
     }
 -(void)didBeginContact:(SKPhysicsContact *)contact
@@ -136,17 +173,24 @@ return value * (high - low) + low;
         // Collision between halo and ball.
         if (firstBody.node != nil) {
             [self addExplosion:firstBody.node.position];
-        }
-        
+            
         [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
+        }
+        if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCShieldCategory) {
+            // Collision between halo and shield.
+            [self addExplosion:firstBody.node.position];
+            
+            [firstBody.node removeFromParent];
+            [secondBody.node removeFromParent];
+        }
     }
         
 }
 
 -(void)addExplosion:(CGPoint)position
 {
-    NSString *explosionPath = [[NSBundle mainBundle] pathForResource:@"HaloExplosion" ofType:@"sks"];
+    NSString *explosionPath = [[NSBundle mainBundle] pathForResource:@"haloExplosion" ofType:@"sks"];
     SKEmitterNode *explosion = [NSKeyedUnarchiver unarchiveObjectWithFile:explosionPath];
     explosion.position = position;
     [_mainlayer addChild:explosion];
